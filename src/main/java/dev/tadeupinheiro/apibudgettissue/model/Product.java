@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "TB_PRODUCT_MODEL0")
+@Table(name = "TB_PRODUCT_MODEL")
 public class Product {
 
     @Id
@@ -24,16 +24,6 @@ public class Product {
     @NotBlank
     private BigDecimal paintingConsumption;
 
-    public BigDecimal paintingCalculation (int quantityColorsSmallPainting, int quantityColorsBigPainting, BigDecimal costColorBigPainting, BigDecimal costColorSmallPainting){
-
-        BigDecimal costSmallPainting = costColorSmallPainting.multiply(BigDecimal.valueOf(quantityColorsSmallPainting));
-        BigDecimal costBigPainting = costColorBigPainting.multiply(BigDecimal.valueOf(quantityColorsBigPainting));
-
-        BigDecimal total = new BigDecimal(0);
-        total = total.add(costBigPainting);
-        total = total.add(costSmallPainting);
-        return total;
-    };
 
     public String getName() {
         return name;
