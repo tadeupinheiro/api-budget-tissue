@@ -1,8 +1,6 @@
 package dev.tadeupinheiro.apibudgettissue.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
@@ -12,18 +10,25 @@ import java.math.BigDecimal;
 public class Product {
 
     @Id
+    private String idProduct;
+    @NotBlank
     private String name;
     @NotBlank
     private double tissueConsumption;
     @NotBlank
     private double threadConsumption;
-    @NotBlank
-    private double stripReflectiveConsumption;
-    @NotBlank
-    private double elasticConsumption;
-    @NotBlank
-    private BigDecimal paintingConsumption;
+    @ManyToOne
+    @JoinColumn(name = "strip", nullable = false)
+    private StripReflectiveConsumption stripReflectiveConsumption;
 
+
+    public String getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
+    }
 
     public String getName() {
         return name;
@@ -57,19 +62,4 @@ public class Product {
         this.stripReflectiveConsumption = stripReflectiveConsumption;
     }
 
-    public double getElasticConsumption() {
-        return elasticConsumption;
-    }
-
-    public void setElasticConsumption(double elasticConsumption) {
-        this.elasticConsumption = elasticConsumption;
-    }
-
-    public BigDecimal getPaintingConsumption() {
-        return paintingConsumption;
-    }
-
-    public void setPaintingConsumption(BigDecimal paintingConsumption) {
-        this.paintingConsumption = paintingConsumption;
-    }
 }

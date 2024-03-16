@@ -25,4 +25,8 @@ public class ProductService {
         return total;
     };
 
+    public boolean existsByIdProduct (String idProduct){
+        return this.productRepository.existsById(idProduct);
+    }
+
 }
