@@ -2,10 +2,12 @@ package dev.tadeupinheiro.apibudgettissue.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -20,6 +22,8 @@ public class ThreadRoll {
     private double size;
     @NotBlank
     private String type;
+    @OneToMany
+    private List<Product> product;
 
     public String getName() {
         return name;

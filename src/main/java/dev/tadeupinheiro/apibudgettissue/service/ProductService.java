@@ -1,6 +1,8 @@
 package dev.tadeupinheiro.apibudgettissue.service;
 
+import dev.tadeupinheiro.apibudgettissue.model.Product;
 import dev.tadeupinheiro.apibudgettissue.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,8 +27,14 @@ public class ProductService {
         return total;
     };
 
-    public boolean existsByIdProduct (String idProduct){
+    public boolean existsByIdProduct (Integer idProduct){
         return this.productRepository.existsById(idProduct);
+    }
+
+    @Transactional
+    public Product saveProduct (Product product){
+        this.productRepository.save(product);
+        return product;
     }
 
 }

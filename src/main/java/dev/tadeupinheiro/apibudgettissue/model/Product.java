@@ -2,31 +2,42 @@ package dev.tadeupinheiro.apibudgettissue.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_PRODUCT_MODEL")
 public class Product {
 
     @Id
-    private String idProduct;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idProduct;
     @NotBlank
     private String name;
     @NotBlank
     private double tissueConsumption;
     @NotBlank
     private double threadConsumption;
+    @NotBlank
+    @ManyToOne
+    private ThreadRoll idThread;
+    @NotNull
+    private BigDecimal costThread;
     @ManyToOne
     @JoinColumn(name = "strip", nullable = false)
     private StripReflectiveConsumption stripReflectiveConsumption;
 
+    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
+    private List<CostBudget> costBudgets;
 
-    public String getIdProduct() {
+
+    public Integer getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(String idProduct) {
+    public void setIdProduct(Integer idProduct) {
         this.idProduct = idProduct;
     }
 
@@ -54,12 +65,34 @@ public class Product {
         this.threadConsumption = threadConsumption;
     }
 
-    public double getStripReflectiveConsumption() {
+    public ThreadRoll getIdThread() {
+        return idThread;
+    }
+
+    public void setIdThread(ThreadRoll idThread) {
+        this.idThread = idThread;
+    }
+
+    public BigDecimal getCostThread() {
+        return costThread;
+    }
+
+    public void setCostThread(BigDecimal costThread) {
+        this.costThread = costThread;
+    }
+
+    public StripReflectiveConsumption getStripReflectiveConsumption() {
         return stripReflectiveConsumption;
     }
 
-    public void setStripReflectiveConsumption(double stripReflectiveConsumption) {
+    public void setStripReflectiveConsumption(StripReflectiveConsumption stripReflectiveConsumption) {
         this.stripReflectiveConsumption = stripReflectiveConsumption;
+    }
+
+    public BigDecimal calculateThreadCost (ThreadRoll threadRoll){
+
+        var costPrice = threadRoll.getCostPriceRoll();
+        return costPrice.multiply(new BigDecimal(this.threadConsumption));
     }
 
 }
